@@ -48,3 +48,14 @@ If successful, this will return:
 ```
 {"data":{"id":3432,"email":"test123@user123.com","provider":"email","uid":"test123@user123.com","allow_password_change":false,"name":null,"nickname":null,"image":null}
 ```
+
+* Sending a message
+```
+curl -i -X POST -H "Content-Type: application/json" -H "access-token: Z4m9ZoBIFCe0QWXk0m56fQ" -H "client: BgqF5-ybK8Wjz4d4piIVBg" -H "expiry: 1685939489" -H "uid: test123@user123.com" -d '{"receiver_id": 1, "receiver_class": "User", "body": "kamusta?"}' http://206.189.91.54/api/v1/messages
+```
+
+If successful, this will return:
+```
+{"data":{"id":23978,"body":"kamusta?","message_reference_id":5946,"created_at":"2023-05-22T10:01:00.416Z","updated_at":"2023-05-22T10:01:00.416Z"}}
+```
+Note that this will also return a `set-cookie`.
