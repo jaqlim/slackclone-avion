@@ -70,3 +70,13 @@ If successful (and a message is pending), this will return:
 ```
 {"data":[{"id":23978,"body":"kamusta?","created_at":"2023-05-22T10:01:00.416Z","sender":{"id":3432,"provider":"email","uid":"test123@user123.com","allow_password_change":false,"name":null,"nickname":null,"image":null,"email":"test123@user123.com","created_at":"2023-05-22T04:09:41.245Z","updated_at":"2023-05-22T04:31:29.617Z"},"receiver":{"id":1,"provider":"email","uid":"user2@example.com","allow_password_change":false,"name":null,"nickname":null,"image":null,"email":"user2@example.com","created_at":"2021-07-06T13:45:11.558Z","updated_at":"2022-06-03T02:19:29.151Z"}}]}
 ```
+
+* Creating a channel with members
+```
+curl -i -X POST -H "Content-Type: application/json" -H "access-token: Z4m9ZoBIFCe0QWXk0m56fQ" -H "client: BgqF5-ybK8Wjz4d4piIVBg" -H "expiry: 1685939489" -H "uid: test123@user123.com" -d '{"name": "avion-chikahan", "user_ids": [5]}' http://206.189.91.54/api/v1/channels
+```
+
+If successful, this will return:
+```
+{"data":{"id":4494,"owner_id":3432,"name":"avion-chikahan","created_at":"2023-05-22T10:21:43.853Z","updated_at":"2023-05-22T10:21:43.853Z"}}
+```
