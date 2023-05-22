@@ -59,3 +59,14 @@ If successful, this will return:
 {"data":{"id":23978,"body":"kamusta?","message_reference_id":5946,"created_at":"2023-05-22T10:01:00.416Z","updated_at":"2023-05-22T10:01:00.416Z"}}
 ```
 Note that this will also return a `set-cookie`.
+
+* Retrieving a message
+```
+curl -i -X GET -H "Content-Type: application/json" -H "access-token: Z4m9ZoBIFCe0QWXk0m56fQ" -H "client: BgqF5-ybK8Wjz4d4piIVBg" -H "expiry: 1685939489" -H "uid: test123@user123.com" "http://206.189.91.54/api/v1/messages?receiver_id=1&receiver_class=User"
+
+```
+
+If successful (and a message is pending), this will return:
+```
+{"data":[{"id":23978,"body":"kamusta?","created_at":"2023-05-22T10:01:00.416Z","sender":{"id":3432,"provider":"email","uid":"test123@user123.com","allow_password_change":false,"name":null,"nickname":null,"image":null,"email":"test123@user123.com","created_at":"2023-05-22T04:09:41.245Z","updated_at":"2023-05-22T04:31:29.617Z"},"receiver":{"id":1,"provider":"email","uid":"user2@example.com","allow_password_change":false,"name":null,"nickname":null,"image":null,"email":"user2@example.com","created_at":"2021-07-06T13:45:11.558Z","updated_at":"2022-06-03T02:19:29.151Z"}}]}
+```
