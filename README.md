@@ -86,3 +86,8 @@ If successful, this will return:
 curl -i -X GET -H "Content-Type: application/json" -H "access-token: Z4m9ZoBIFCe0QWXk0m56fQ" -H "client: BgqF5-ybK8Wjz4d4piIVBg" -H "expiry: 1685939489" -H "uid: test123@user123.com" http://206.189.91.54/api/v1/channels/3
 
 ```
+
+* Adding a member to a channel
+```
+curl -i -X POST -H "Content-Type: application/json" -H "access-token: Z4m9ZoBIFCe0QWXk0m56fQ" -H "client: BgqF5-ybK8Wjz4d4piIVBg" -H "expiry: 1685939489" -H "uid: test123@user123.com" -d '{"id": 3, "member_id": 3}' http://206.189.91.54/api/v1/channel/add_member
+```
