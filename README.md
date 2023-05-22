@@ -80,3 +80,9 @@ If successful, this will return:
 ```
 {"data":{"id":4494,"owner_id":3432,"name":"avion-chikahan","created_at":"2023-05-22T10:21:43.853Z","updated_at":"2023-05-22T10:21:43.853Z"}}
 ```
+
+* Getting channel details via channel ID
+```
+curl -i -X GET -H "Content-Type: application/json" -H "access-token: Z4m9ZoBIFCe0QWXk0m56fQ" -H "client: BgqF5-ybK8Wjz4d4piIVBg" -H "expiry: 1685939489" -H "uid: test123@user123.com" http://206.189.91.54/api/v1/channels/3
+
+```
