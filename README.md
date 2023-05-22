@@ -91,3 +91,13 @@ curl -i -X GET -H "Content-Type: application/json" -H "access-token: Z4m9ZoBIFCe
 ```
 curl -i -X POST -H "Content-Type: application/json" -H "access-token: Z4m9ZoBIFCe0QWXk0m56fQ" -H "client: BgqF5-ybK8Wjz4d4piIVBg" -H "expiry: 1685939489" -H "uid: test123@user123.com" -d '{"id": 3, "member_id": 3}' http://206.189.91.54/api/v1/channel/add_member
 ```
+
+* Getting a list of all users
+```
+curl -i -X GET -H "Content-Type: application/json" -H "access-token: Z4m9ZoBIFCe0QWXk0m56fQ" -H "client: BgqF5-ybK8Wjz4d4piIVBg" -H "expiry: 1685939489" -H "uid: test123@user123.com" http://206.189.91.54/api/v1/users
+```
+
+If successful, this will return:
+```
+{"id":2419,"provider":"email","uid":"stevemcu@gmail.com","allow_password_change":false,"name":null,"nickname":null,"image":null,"email":"stevemcu@gmail.com","created_at":"2022-07-20T03:20:53.495Z","updated_at":"2022-07-22T22:49:34.520Z"},{"id":2569,"provider":"email","uid":"aasdf@gmail.com","allow_password_change":false,"name":null,"nickname":null,"image":null,"email":"aasdf@gmail.com","created_at":"2022-08-29T04:52:20.509Z","updated_at":"2022-08-29T04:52:20.577Z"},{"id":2571,"provider":"email","uid":"asdfasd@gmail.com","allow_password_change":false,"name":null,"nickname":null,"image":null,"email":"asdfasd@gmail.com","created_at":"2022-08-29T04:55:25.767Z","updated_at":"2022-08-29T04:55:25.839Z"}
+```
