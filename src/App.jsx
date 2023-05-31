@@ -1,10 +1,14 @@
+import { useGlobalContext } from "./Context"
 import Auth from "./pages/Auth"
+import Dashboard from "./pages/Dashboard"
 
 const App = () => {
+
+  const {isLogin} = useGlobalContext()
   
   return (
     <>
-  <Auth />
+    {isLogin ? <Dashboard /> : <Auth />}
     </>
     )
 }
