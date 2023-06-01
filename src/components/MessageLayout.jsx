@@ -7,28 +7,38 @@ import axios from "axios";
 
 const MessageLayout = () => {
   const { messages,headerName, setMessages,API_URL, messageID, addMessage, user, messagePage } = useGlobalContext();
+  
   const retrieveMessage = async () => {
     const { token, client, uid, expiry } = user;
     try {
-        const response = await axios.get(
-          `${API_URL}/messages?receiver_id=${messageID}&receiver_class=${messagePage}`,
-          {
-            headers: {
-              "access-token": token,
-              client: client,
-              expiry: expiry,
-              uid: uid,
-            },
-          }
-        );
-        setMessages(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
+      const response = await axios.get(
+        `${API_URL}/messages?receiver_id=${messageID}&receiver_class=${messagePage}`,
+        {
+          headers: {
+            "access-token": token,
+            client: client,
+            expiry: expiry,
+            uid: uid,
+          },
+        }
+      );
+      setMessages(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   useEffect(() => {
-    retrieveMessage()
-  }, [addMessage, messageID])
+    retrieveMessage();
+    const intervalId = setInterval(() => {
+      retrieveMessage();
+    }, 10000);
+    
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [addMessage, messageID, user]);
+
   return (
     <>
       <div className="px-48 bg-sky-50 w-screen h-screen flex flex-col">

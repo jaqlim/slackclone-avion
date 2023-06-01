@@ -168,9 +168,31 @@ const AppProvider = ({ children }) => {
         await getUserChannel();
       };
       getUser();
+  
+      const fetchMessages = async () => {
+        try {
+          const response = await axios.get(`${API_URL}/messages?receiver_id=${user.id}&receiver_class=User`, {
+            headers: {
+              "Content-Type": "application/json",
+              "access-token": user.token,
+              client: user.client,
+              expiry: user.expiry,
+              uid: user.uid,
+            },
+          });
+          const { data } = response;
+          setMessages(data.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      const intervalId = setInterval(fetchMessages, 30000);
+  
+      return () => clearInterval(intervalId);
     }
   }, [user]);
-
+  
   const addMessage = async (e) => {
     e.preventDefault();
     const { token, client, uid, expiry } = user;
@@ -264,6 +286,7 @@ const AppProvider = ({ children }) => {
         memberList,
         addMessage,
         messages,
+        setMessages,
         logout,
         API_URL,
         addChannelToUser,
