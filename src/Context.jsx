@@ -17,12 +17,15 @@ const AppProvider = ({ children }) => {
     password: "",
   });
 
+  const [users, setUsers] = useState([]);
+  const [activeUser, setActiveUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [headerName, setHeaderName] = useState("");
   const [messageID, setMessageID] = useState("");
   const [memberList, setMemberList] = useState([]);
 
   const getData = async (page, id, name) => {
+    await getUsers();
     setMessagePage('')
     setHeaderName('')
     setMessageID(null)
@@ -57,6 +60,29 @@ const AppProvider = ({ children }) => {
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const getUsers = async () => {
+    const { token, client, expiry, uid } = user;
+    try {
+      const response = await axios.get(`${API_URL}/users`, {
+        headers: {
+          "access-token": token,
+          client: client,
+          expiry: expiry,
+          uid: uid,
+        },
+      });
+      const { data } = response;
+      setUsers(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const changeActiveUser = (userId) => {
+    const user = users.find((user) => user.id === userId);
+    setActiveUser(user);
   };
 
   const addChannelToUser = async (e) => {
@@ -164,10 +190,16 @@ const AppProvider = ({ children }) => {
     if (user) {
       setIsLogin(true);
       localStorage.setItem("user", JSON.stringify(user));
+  
       const getUser = async () => {
         await getUserChannel();
       };
       getUser();
+  
+      const fetchUsers = async () => {
+        await getUsers();
+      };
+      fetchUsers();
   
       const fetchMessages = async () => {
         try {
@@ -269,6 +301,7 @@ const AppProvider = ({ children }) => {
     getUserChannel()
     }
   }, [userChannelList])
+
   return (
     <AppContext.Provider
       value={{
