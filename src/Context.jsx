@@ -294,7 +294,6 @@ const AppProvider = ({ children }) => {
         setChannelForm,
         setMessagePage,
         addMember,
-        setMessages,
         userChannelList,
         handleLogin,
         setAddChannelMember,
