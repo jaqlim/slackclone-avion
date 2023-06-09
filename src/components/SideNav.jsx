@@ -61,16 +61,16 @@ const SideNav = () => {
           </span>
         </li>
         <div className="w-full max-h-48 overflow-y-auto">
-          {(searchUserList.length > 0 ? searchUserList : userList).map((user, index) => (
-            <div
-              key={index}
-              className="text-gray-500 my-2 cursor-pointer"
-              onClick={() => setSelectedUser(user)}
-            >
-              {user.email}
-            </div>
-          ))}
+          {(searchUserList?.length > 0 ? searchUserList : userList)?.map((user, index) => (
+        <div
+          key={index}
+          className="text-gray-500 my-2 cursor-pointer"
+          onClick={() => setSelectedUser(user)}
+        >
+        {user.email}
         </div>
+  ))}
+</div>
         <li className="mt-auto text-center">
           <div>YOUR ID:</div>
           {user.id}
