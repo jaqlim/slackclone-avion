@@ -13,6 +13,8 @@ const SideNav = () => {
     setSelectedUser
   } = useGlobalContext();
 
+  console.log(userList);
+
   return (
     <nav className="flex flex-col w-48 items-center border h-screen fixed left-0 top-o bg-white">
       <h1 className="font-black text-4xl w-full my-5 text-center border-b pb-5">
