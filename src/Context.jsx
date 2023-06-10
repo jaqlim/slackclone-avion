@@ -17,12 +17,17 @@ const AppProvider = ({ children }) => {
     password: "",
   });
 
+  const [users, setUsers] = useState([]);
+  const [activeUser, setActiveUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [headerName, setHeaderName] = useState("");
   const [messageID, setMessageID] = useState("");
   const [memberList, setMemberList] = useState([]);
+  const [userList, setUserList] = useState([]);
+  const [searchUserList, setSearchUserList] = useState([]);
 
   const getData = async (page, id, name) => {
+    await getUsers();
     setMessagePage('')
     setHeaderName('')
     setMessageID(null)
@@ -57,6 +62,42 @@ const AppProvider = ({ children }) => {
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const getUsers = async () => {
+    const { token, client, expiry, uid } = user;
+    try {
+      const response = await axios.get(`${API_URL}/users`, {
+        headers: {
+          "access-token": token,
+          client: client,
+          expiry: expiry,
+          uid: uid,
+        },
+      });
+      const { data } = response;
+      setUsers(data.data);
+      setUserList(data.data);
+      console.log('Users fetched:', data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const searchUsers = (searchTerm) => {
+    if (!searchTerm) {
+      setSearchUserList([]);
+      return;
+    }
+    const filteredUsers = userList.filter(user =>
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSearchUserList(filteredUsers);
+  };
+
+  const changeActiveUser = (userId) => {
+    const user = users.find((user) => user.id === userId);
+    setActiveUser(user);
   };
 
   const addChannelToUser = async (e) => {
@@ -164,11 +205,10 @@ const AppProvider = ({ children }) => {
     if (user) {
       setIsLogin(true);
       localStorage.setItem("user", JSON.stringify(user));
-      const getUser = async () => {
-        await getUserChannel();
-      };
-      getUser();
-  
+
+      getUsers(); // fetch users
+      getUserChannel();
+
       const fetchMessages = async () => {
         try {
           const response = await axios.get(`${API_URL}/messages?receiver_id=${user.id}&receiver_class=User`, {
@@ -186,9 +226,9 @@ const AppProvider = ({ children }) => {
           console.log(error);
         }
       };
-  
+
       const intervalId = setInterval(fetchMessages, 30000);
-  
+
       return () => clearInterval(intervalId);
     }
   }, [user]);
@@ -269,6 +309,7 @@ const AppProvider = ({ children }) => {
     getUserChannel()
     }
   }, [userChannelList])
+
   return (
     <AppContext.Provider
       value={{
@@ -294,7 +335,6 @@ const AppProvider = ({ children }) => {
         setChannelForm,
         setMessagePage,
         addMember,
-        setMessages,
         userChannelList,
         handleLogin,
         setAddChannelMember,
@@ -310,6 +350,7 @@ const AppProvider = ({ children }) => {
         createChannelModal,
         setCreateChannelModal,
         loginUser,
+        searchUsers,
         logForm,
         setLogForm,
       }}
